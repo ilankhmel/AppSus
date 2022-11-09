@@ -21,9 +21,10 @@ const routerOptions = {
     {
       path: '/mail',
       component: mailApp,
+      redirect:'/mail/list',
       children: [
         {
-            path: 'inbox',
+            path: 'list',
             component: mailList,
         },                
         {
@@ -39,7 +40,7 @@ const routerOptions = {
             // component: aboutTeam,
         },  
         {
-          path: '/mail/:id',
+          path: ':id',
           component: mailDetails
         },                           
     ]

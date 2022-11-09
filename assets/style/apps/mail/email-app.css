@@ -1,6 +1,7 @@
 li {
     list-style-type: none;
 }
+
 ul{
     margin: 0;
     padding: 0;
@@ -15,6 +16,8 @@ ul{
     align-content: center;
     padding: 3px;
 }
+
+
 .mail-preview :hover{
     /* background-color: rgb(221, 177, 177); */
 }
