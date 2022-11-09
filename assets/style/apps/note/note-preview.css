@@ -1,0 +1,50 @@
+.note-controlers {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.note-controls button {
+    border: none;
+    background: none;
+    color: #525252;
+    font-size: 1.1rem;
+    padding: .5rem;
+}
+
+.note-controls button:first-of-type {
+    padding: .5rem .65rem;
+}
+
+.note-controls button:hover {
+    border-radius: 50%;
+    background-color: rgb(212, 212, 212);
+    color: black;
+}
+
+.note-type {
+    margin-block-start: 10px;
+    font-size: 1.3rem;
+}
+
+.colors-container{
+    position: absolute;
+    width: 109px;
+    height: 110px;
+    border: 1px solid #0000004f;
+    z-index: 1;
+    background-color: #fff;
+    right: 80px;
+    bottom: 25px;
+    padding: 5px;
+    box-shadow: inset 0 0 1px 0px black;
+}
+
+.colors-container >*{
+    display: inline-block;
+    height: 26px;
+    width: 26px;
+    margin: 2px;
+    border-radius: 50%;
+    border: 1px solid #00000026;
+}
