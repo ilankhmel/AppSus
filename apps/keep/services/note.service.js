@@ -42,7 +42,6 @@ function query() {
   return storageService.query(NOTES_KEY);
 }
 
-console.log(query());
 _createNotes();
 
 function _createNotes() {
@@ -64,25 +63,30 @@ function get(noteId) {
 }
 
 function updateNoteElement(noteId, element, value) {
-  var note = get(noteId);
-  note[element] = value;
-  utilService.saveToStorage(NOTES_KEY, 'notes');
-  return note;
+  return query().then((notes) => {
+    var idx = notes.findIndex((note) => note.id === noteId);
+    console.log(idx);
+    notes[idx][element] = value;
+    utilService.saveToStorage(NOTES_KEY, notes);
+    return notes;
+  });
 }
 
 function deleteNote(noteId) {
-  var notes = query();
-  var idx = notes.findIndex((note) => note.id === noteId);
-  notes.splice(idx, 1);
-  utilService.saveToStorage(NOTES_KEY, notes);
-  return notes;
+  return query().then((notes) => {
+    var idx = notes.findIndex((note) => note.id === noteId);
+    notes.splice(idx, 1);
+    utilService.saveToStorage(NOTES_KEY, notes);
+    return notes;
+  });
 }
 
 function copyNote(note) {
   const newNote = JSON.parse(JSON.stringify(note));
   newNote.id = utilService.makeId();
-  var notes = query();
-  notes.push(newNote);
-  utilService.saveToStorage(NOTES_KEY, notes);
-  return notes;
+  return query().then((notes) => {
+    notes.push(newNote);
+    utilService.saveToStorage(NOTES_KEY, notes);
+    return notes;
+  });
 }

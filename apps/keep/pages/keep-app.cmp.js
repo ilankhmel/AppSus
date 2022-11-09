@@ -7,7 +7,7 @@ export default {
   template: `
     <section v-if="notes" class="keep-app">
       <div class="">
-        <note-list :notes="notesToShow"/>
+        <note-list :notes="notes"/>   
       </div>
     </section>
   `,
@@ -22,12 +22,13 @@ export default {
   created() {
     noteService.query().then((notes) => {
       this.notes = notes;
+      console.log();
     });
   },
   computed: {
-    notesToShow() {
-      return this.notes;
-    },
+    // notesToShow() {
+    //   return this.notes;
+    // },
   },
   components: {
     noteList,

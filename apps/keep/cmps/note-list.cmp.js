@@ -5,14 +5,15 @@ export default {
   template: `
     <div v-if="notes">
         <div class="note-container" v-for="(note,idx) in notes" :key="idx">
+         <!-- <{{note}}> -->
             <note-preview :note="note"/> 
         </div>
     </div>
   `,
   data() {
-    return {
-      notes: this.notes,
-    };
+    return {};
   },
-  components: notePreview,
+  components: {
+    notePreview,
+  },
 };
