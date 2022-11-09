@@ -1,0 +1,57 @@
+li {
+    list-style-type: none;
+}
+ul{
+    margin: 0;
+    padding: 0;
+}
+.mail-list{
+    flex-basis: 75%;
+   
+}
+.mail-preview{
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    padding: 3px;
+}
+.mail-preview :hover{
+    /* background-color: rgb(221, 177, 177); */
+}
+
+.mail-filter{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    /* height: 30px; */
+    padding: 10px;
+}
+
+.mail-filter input {
+    height: 10px;
+    width: 40%;
+}
+
+.mail-filter button{
+    /* padding: 10px; */
+    /* height: 10px; */
+    min-width: none;
+    min-height: auto;
+}
+.folder-filter{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 20vw;
+}
+.folder-filter button {
+    text-align: start;
+    background-color: white;
+    border-radius: 20px;
+    border: 0px;
+}
+.mail-flex{
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+}
