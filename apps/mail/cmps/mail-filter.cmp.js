@@ -1,8 +1,10 @@
+import { eventBus } from "../../../services/event-bus.service.js"
+
 export default {
     template: `
         <section class="mail-filter">
             <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Gmail2020.logo.png" alt="" />
-            <button @click="" class="hamburger"><i class="fa-solid fa-bars"></i></button>
+            <button @click="setMenuStyle" class="hamburger" ><i class="fa-solid fa-bars"></i></button>
             <input 
                 @input="filter"
                 v-model="filterBy.name" 
@@ -47,14 +49,18 @@ export default {
             var value = ev.target.options[ev.target.options.selectedIndex].text
             this.filterBy.sort = value
             this.filter()
-        }
+        },
+
+        setMenuStyle(){
+            eventBus.emit('toggleStyle')
+        },
     },
 
     computed: {
         dropStyle(){
            return (this.isShown) ? 'shown' : ''
-        }
+        },
+
+       
     }
-
-
 }

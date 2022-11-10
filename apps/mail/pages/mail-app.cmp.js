@@ -109,7 +109,7 @@ export default {
         mailsToShow(){
           console.log(this.filterBy);
           const regex = new RegExp(this.filterBy.name, 'i')
-          var mails = this.mails.filter(mail => regex.test(mail.body))
+          var mails = this.mails.filter(mail => regex.test(mail.subject))
           if(this.filterBy.isRead !== ''){
           mails = mails.filter(mail => mail.isRead === this.filterBy.isRead)
           }

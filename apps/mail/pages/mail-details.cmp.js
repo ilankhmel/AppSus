@@ -8,7 +8,7 @@ export default {
               <button @click="untrashMail" title="Untrash"><i class="fa-solid fa-ban"></i></button>
               <button @click="deleteMail" title="Delete Permanently"><i class="fa-solid fa-file-excel"></i></button>
             </span>
-            <router-link :to="'list/send/' + mail.id">reply</router-link>
+            <router-link :to="'list/send/' + mail.id" title="reply"><i class="fa-solid fa-reply"></i></router-link>
             <!-- <hr /> -->
             <!-- <h1>Detals</h1> -->
             <!-- <pre>{{ mail }}</pre> -->
