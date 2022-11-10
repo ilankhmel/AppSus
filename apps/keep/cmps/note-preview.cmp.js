@@ -2,30 +2,30 @@ import { noteService } from '../services/note.service.js';
 import noteText from './note-types/note-text.cmp.js';
 import noteTodos from './note-types/note-todos.cmp.js';
 import noteImg from './note-types/note-img.cmp.js';
+import noteVideo from './note-types/note-video.cmp.js';
 
 export default {
   name: 'note-preview',
   props: ['note'],
   template: `
-        <section class="note-preview-container" @mouseover="showControlers" @mouseour="hideControlers">
+        <section class="note-preview-container" @mouseover="showControlers" @mouseout="hideControlers" :style="note.style" >
             <component :is="note.type" :info="note.info" :edit="editMode" @doneEditTodo="onDoneEditTodo" @doneEditText="onDoneEditText" @doneEditSrc="onDoneEditSrc" :key="note.key"></component>
             <div v-if="colorMenu" class="colors-container" title="Background options">
-            <span :style="{backgroundColor:'#f28B82'}" title="Red" @click.stop="setBgc('#f28B82')"></span>
-            <span :style="{backgroundColor:'#FBBC04'}" title="Orange" @click.stop="setBgc('#FBBC04')"></span>
-            <span :style="{backgroundColor:'#fff475'}" title="Yellow" @click.stop="setBgc('#fff475')"></span>
-            <span :style="{backgroundColor:'#CCFF90'}" title="Green" @click.stop="setBgc('#CCFF90')"></span>
-            <span :style="{backgroundColor:'#A7FFEB'}" title="Teal" @click.stop="setBgc('#A7FFEB')"></span>
-            <span :style="{backgroundColor:'#CBF0F8'}" title="Blue" @click.stop="setBgc('#CBF0F8')"></span>
-            <span :style="{backgroundColor:'#AECBFA'}" title="Dark Blue" @click.stop="setBgc('#AECBFA')"></span>
-            <span :style="{backgroundColor:'#D7AEFB'}" title="Purple" @click.stop="setBgc('#D7AEFB')"></span>
-            <span :style="{backgroundColor:'#FDCFE8'}" title="Pink" @click.stop="setBgc('#FDCFE8')"></span>
-            <span :style="{backgroundColor:'#E6C9A8'}" title="Brown" @click.stop="setBgc('#E6C9A8')"></span>
-            <span :style="{backgroundColor:'#E8EAED'}" title="Dfault" @click.stop="setBgc('#E8EAED')"></span>
+            <span :style="{backgroundColor:'#f28B82'}" title="Red" @click.stop="setBcg('#f28B82')"></span>
+            <span :style="{backgroundColor:'#FBBC04'}" title="Orange" @click.stop="setBcg('#FBBC04')"></span>
+            <span :style="{backgroundColor:'#fff475'}" title="Yellow" @click.stop="setBcg('#fff475')"></span>
+            <span :style="{backgroundColor:'#CCFF90'}" title="Green" @click.stop="setBcg('#CCFF90')"></span>
+            <span :style="{backgroundColor:'#A7FFEB'}" title="Teal" @click.stop="setBcg('#A7FFEB')"></span>
+            <span :style="{backgroundColor:'#CBF0F8'}" title="Blue" @click.stop="setBcg('#CBF0F8')"></span>
+            <span :style="{backgroundColor:'#AECBFA'}" title="Dark Blue" @click.stop="setBcg('#AECBFA')"></span>
+            <span :style="{backgroundColor:'#D7AEFB'}" title="Purple" @click.stop="setBcg('#D7AEFB')"></span>
+            <span :style="{backgroundColor:'#FDCFE8'}" title="Pink" @click.stop="setBcg('#FDCFE8')"></span>
+            <span :style="{backgroundColor:'#E6C9A8'}" title="Brown" @click.stop="setBcg('#E6C9A8')"></span>
+            <span :style="{backgroundColor:'#E8EAED'}" title="White" @click.stop="setBcg('#E8EAED')"></span>
             </div>
             <div v-show="controlers" class="note-controlers">
-              <h1>dkkd</h1>
                 <button title="Pin note" @click.stop="togglePin">
-                    <i></i>
+                    <i class="fas fa-thumbtack"></i>
                 </button>
                 <button title="Background options" @click.stop="toggleColorMenu">
                     <i class="fas fa-palette"></i>
@@ -62,9 +62,16 @@ export default {
       console.log(this.colorMenu);
     },
     setBcg(color) {
-      this.noteBcg.BackgroundColor = color;
+      console.log(color);
+      console.log(this.note.style);
+      this.note.style.backgroundColor = color;
+      console.log(color);
       this.colorMenu = false;
-      noteService.updateNoteElement(this.note.id, 'BackgRoundColor', color);
+      noteService
+        .updateNoteElement(this.note.id, 'backgroundColor', color)
+        .then((notes) => {
+          this.notes = notes;
+        });
     },
     deleteNote(noteId) {
       noteService.deleteNote(noteId).then((notes) => {
@@ -126,5 +133,6 @@ export default {
     noteTodos,
     noteText,
     noteImg,
+    noteVideo,
   },
 };

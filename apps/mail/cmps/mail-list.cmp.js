@@ -14,11 +14,11 @@ export default {
                             <!-- <router-link :to="'/car/edit/' + car.id">Edit</router-link> | -->
                             <!-- <button @click="remove(car.id)">x</button> -->
                         </section>
-                    </router-link> 
+                    <!-- </router-link>  -->
                 </li>
             </ul>
             
-            <router-view />
+            <!-- <router-view /> -->
             <!-- <router-link to="/mail/trash">Trash</router-link> -->
         </section>
             `,
@@ -37,7 +37,5 @@ export default {
             mail.isRead = true
             this.$emit('opened', mail.id)
         }
-        
-     
     }
 }

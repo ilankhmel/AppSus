@@ -1,13 +1,27 @@
 import { noteService } from '../services/note.service.js';
 
 import noteList from '../cmps/note-list.cmp.js';
+import noteFilter from '../cmps/note-filter.cmp.js';
 
 export default {
   name: 'keep-app',
   template: `
     <section v-if="notes" class="keep-app">
-      <div class="">
-        <note-list :notes="notes"/>   
+      <div class="filter-container flex">
+        <note-filter @search="setSearchBy" @setFilterBy="setFilter"/>
+      </div>
+      <div class="notes-preview-container">
+        <!-- <div class="flex flex-column notes-app-w" > -->
+        <div class="pinned-group-header">
+          <h1>PINNED</h1>
+          <div class="columns pinned" >
+            <note-list :notes="pinnedNotesToShow"/>  
+          </div>
+        </div>
+          <div class="columns pinned" >
+            <note-list :notes="unpinnedNotesToShow" />  
+            </div>
+            <!-- <note-list :notes="notes"/>    -->
       </div>
     </section>
   `,
@@ -22,15 +36,74 @@ export default {
   created() {
     noteService.query().then((notes) => {
       this.notes = notes;
-      console.log();
+      console.log('we got notes');
     });
   },
+  methods: {
+    setFilter(filterBy) {
+      this.filterBy = filterBy;
+    },
+    setSearchBy(searchBy) {
+      console.log('searchBy:', searchBy);
+      this.searchBy = searchBy;
+    },
+    onEdit(yes) {
+      this.editMode = yes;
+    },
+  },
   computed: {
+    pinnedNotesToShow() {
+      if (!this.filterBy || !this.searchBy)
+        return this.notes.filter((note) => note.isPinned);
+      if (this.searchBy)
+        return this.notes.filter((note) => {
+          if (note.type === 'note-text')
+            return note.info.txt
+              .toLowerCase()
+              .contains(this.searchBy.toLowerCase());
+          if (note.type === 'note-img' || note.type === 'note-video')
+            return note.info.title
+              .toLowerCase()
+              .contains(this.searchBy.toLowerCase());
+          if (note.type === 'note-todos')
+            return note.info.todos.forEach((todo) =>
+              todo.txt.toLowerCase().contains(this.searchBy.toLowerCase())
+            );
+        });
+      var fiilterdNotes = this.notes.filter(
+        (note) => note.type === this.filterBy
+      );
+      return fiilterdNotes.filter((note) => note.isPinned);
+    },
+    unpinnedNotesToShow() {
+      if (!this.filterBy || !this.searchBy)
+        return this.notes.filter((note) => !note.isPinned);
+      if (this.searchBy)
+        return this.notes.filter((note) => {
+          if (note.type === 'note-text')
+            return note.info.txt
+              .toLowerCase()
+              .contains(this.searchBy.toLowerCase());
+          if (note.type === 'note-img' || note.type === 'note-video')
+            return note.info.title
+              .toLowerCase()
+              .contains(this.searchBy.toLowerCase());
+          if (note.type === 'note-todos')
+            return note.info.todos.forEach((todo) =>
+              todo.txt.toLowerCase().contains(this.searchBy.toLowerCase())
+            );
+        });
+      var fiilterdNotes = this.notes.filter(
+        (note) => note.type === this.filterBy
+      );
+      return fiilterdNotes.filter((note) => !note.isPinned);
+    },
     // notesToShow() {
     //   return this.notes;
     // },
   },
   components: {
     noteList,
+    noteFilter,
   },
 };

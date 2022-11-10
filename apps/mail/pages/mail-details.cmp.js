@@ -2,7 +2,11 @@ import { mailService } from '../../mail/services/mail.service.js'
 export default {
     template: `
       <section v-if="mail" class="mail-details">
-          <button @click="deleteMail" class="trash-mail-btn">Trash</button>
+          <button v-if="!mail.trashed" @click="trashMail" class="delete-mail-btn">Trash</button>
+          <div v-else>
+            <button @click="untrashMail">Untrash</button>
+            <button @click="deleteMail">Delete Permanently</button>
+          </div>
           <router-link to="/mail">Back</router-link>
             <!-- <hr /> -->
             <!-- <h1>Detals</h1> -->
@@ -38,21 +42,43 @@ export default {
         },
 
         trashMail(){
-            // mailService.remove(this.mail.id)
-            //     .then(mail => this.$router.push('/mail'))
-
+            
             mailService.get(this.mail.id)
-                .then(mail => {
-                    console.log(mail);
-                    mail.trashed = true
-                    mailService.save(mail)
-                    this.$router.push('/mail')
-                })
+            .then(mail => {
+                console.log(mail);      
+                this.mail.trashed = true
+                this.$emit('trashed', mail)
+            }) 
+        },
+        untrashMail(){
+            mailService.get(this.mail.id)
+            .then(mail => {
+                this.mail.trashed = false
+                this.$emit('untrashed', mail)
+            }) 
+        },
+
+        deleteMail(){
+            this.$emit('deleted', this.mail.id)
+
+            // mailService.remove(this.mail.id)
+            //     .then(mail => {
+                    
+            //         this.$router.push('/mail')
+            //     })
         }
     },
     computed: {
         mailId() {
             return this.$route.params.id
+        }
+    },
+
+    watch: {
+        mail:{
+            handler(){
+                this.loadMail()
+            }
         }
     }
 }

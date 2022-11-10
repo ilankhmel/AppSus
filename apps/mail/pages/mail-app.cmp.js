@@ -10,8 +10,8 @@ export default {
         <mail-filter @filter="setFilter"></mail-filter>
         <div class="mail-flex">
           <folder-filter @setfolder="setFolder"></folder-filter>
-          <mail-list @opened="markRead" :mails="mailsToShow"  />
-
+          <!-- <mail-list @opened="markRead" :mails="mailsToShow"  /> -->
+          <router-view @opened="markRead" @trashed="trashMail" @untrashed="untrashMail" @deleted="deleteMail" :mails="mailsToShow"/>
         </div>
         <!-- <router-link v-if="mails" to="/mail/inbox" @opened="markRead" :mails="mailsToShow">Inbox</router-link> -->
         <!-- <router-view></router-view> -->
@@ -26,17 +26,44 @@ export default {
           isRead: '',
           folder: '',
         },
+        isShown: false,
       }
     },
 
     created(){
-        mailService.query()
-          .then(mails => {
-            console.log(mails);
-            this.mails = mails
-            }).then(console.log(this.mails))
+        // mailService.query()
+        //   .then(mails => {
+        //     console.log(mails);
+        //     this.mails = mails
+        //     }).then(console.log(this.mails))
+        this.loadMails()
     },
     methods:{
+      trashMail(mail){
+        
+        mail.trashed = true
+        mailService.save(mail)
+          .then(mail => {
+            this.loadMails()
+            this.$router.push('/mail')
+          })
+      },
+
+      untrashMail(mail){
+        mail.trashed = false
+        mailService.save(mail)
+          .then(mail => {
+            this.loadMails()
+            this.$router.push('/mail')
+          })
+      },
+
+      loadMails(){
+        mailService.query()
+        .then(mails => {
+          this.mails = mails
+          })
+      },
       setFilter(filter){
         this.filterBy.name = filter.name
         this.filterBy.isRead = filter.isRead
@@ -48,12 +75,22 @@ export default {
             console.log(mail);
             mail.isRead = true
             mailService.save(mail)
+            this.isShown = true
           })
       },
 
       setFolder(folder){
         this.filterBy.folder = folder
         // console.log(t);
+      },
+
+
+      deleteMail(mailId){
+        mailService.remove(mailId)
+        .then(mail => {
+          this.loadMails()
+            this.$router.push('/mail')
+        })
       }
     },
     computed:{
