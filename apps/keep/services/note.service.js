@@ -8,6 +8,9 @@ export const noteService = {
   updateNoteElement,
   deleteNote,
   copyNote,
+  getEmptyNoteByType,
+  addNewNote,
+  addTodoNote,
 };
 
 var gNotes = [
@@ -204,6 +207,75 @@ function copyNote(note) {
   newNote.id = utilService.makeId();
   return query().then((notes) => {
     notes.push(newNote);
+    utilService.saveToStorage(NOTES_KEY, notes);
+    return notes;
+  });
+}
+
+function getEmptyNoteByType(type) {
+  var newNote = {
+    id: utilService.makeId(),
+    type: type,
+    isPinned: false,
+    style: { backgroundColor: '#D7AEFB' },
+  };
+  switch (type) {
+    case 'note-text':
+      newNote.info = { txt: '' };
+      break;
+    case 'note-img':
+      newNote.info = { url: '', title: '' };
+      break;
+    case 'note-video':
+      newNote.info = { url: '', title: '' };
+      break;
+  }
+  // return query().then((notes) => {
+  //   notes.push(newNote);
+  //   utilService.saveToStorage(NOTES_KEY, notes);
+  //   return newNote;
+
+  return new Promise((resolve) => {
+    resolve(newNote);
+  });
+}
+
+function addNewNote(newNote) {
+  newNote.isPinned = false;
+  console.log(newNote.type);
+  switch (newNote.type) {
+    case 'note-img':
+      console.log(newNote.info.txt);
+      newNote.info.url = newNote.info.txt;
+      newNote.info.title = 'New';
+      break;
+    case 'note-video':
+      newNote.info.url = newNote.info.txt;
+      newNote.info.title = 'New';
+      break;
+  }
+  return query().then((notes) => {
+    notes.push(newNote);
+    utilService.saveToStorage(NOTES_KEY, notes);
+    return notes;
+  });
+}
+
+function addTodoNote(todos) {
+  const todosArr = todos.map((todo) => {
+    return { txt: todo, doneAt: null };
+  });
+  const todoNote = {
+    type: 'note-todos',
+    id: utilService.getRandomId(),
+    isPinned: false,
+    backgroundColor: '#fffd88',
+    info: {
+      todos: todosArr,
+    },
+  };
+  return query().then((notes) => {
+    notes.push(todoNote);
     utilService.saveToStorage(NOTES_KEY, notes);
     return notes;
   });
