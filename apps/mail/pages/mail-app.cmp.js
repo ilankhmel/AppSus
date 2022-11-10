@@ -1,12 +1,13 @@
 import { mailService } from "../services/mail.service.js";
+import { eventBus } from "../../../services/event-bus.service.js";
 import mailFilter from '../cmps/mail-filter.cmp.js'
 import folderFilter from '../cmps/folder.filter.cmp.js'
 import mailList from '../cmps/mail-list.cmp.js'
 
 export default {
   template: `
-      <section>
-        <h1>MailApp</h1>
+      <section class="mail-app">
+        <!-- <h1>MailApp</h1> -->
         <mail-filter @filter="setFilter"></mail-filter>
         <div class="mail-flex">
           <folder-filter @setfolder="setFolder"></folder-filter>
@@ -25,6 +26,7 @@ export default {
           name: '',
           isRead: '',
           folder: '',
+          sort: "",
         },
         isShown: false,
       }
@@ -37,8 +39,17 @@ export default {
         //     this.mails = mails
         //     }).then(console.log(this.mails))
         this.loadMails()
+        eventBus.on('msgSent', this.loadMails)
+        eventBus.on('saveRefresh', this.saveAndRefresh)
     },
     methods:{
+      saveAndRefresh(mail){
+        mailService.save(mail)
+          .then(a => {
+            this.loadMails()
+          }
+        )
+      },
       trashMail(mail){
         
         mail.trashed = true
@@ -67,6 +78,7 @@ export default {
       setFilter(filter){
         this.filterBy.name = filter.name
         this.filterBy.isRead = filter.isRead
+        this.filterBy.sort = filter.sort
       },
 
       markRead(mailId){
@@ -119,17 +131,34 @@ export default {
               case 'draft':
                 mails = mails.filter(mail => mail.draft === true)
                 break;
+
+              case 'star':
+                mails = mails.filter(mail => mail.isStarred === true)
+                break;
+
               case 'sent':
                 var details = mailService.getUserDetails()
                   // .then(details => {
                     console.log(details);
                     console.log(mails);
-                    return mails = mails.filter(mail => mail.from === details.email)
+                    mails = mails.filter(mail => mail.from === details.email)
                   // })
                 break;
             
               default:
                 break;
+            }
+          }
+          if(this.filterBy.sort !== ''){
+            console.log('isnt');
+            console.log(this.filterBy.sort );
+            switch (this.filterBy.sort) {
+                case 'Subject':
+                  mails = mails.sort((a,b)=> {return a.subject - b.subject})
+                  break;
+                case 'Date':
+                  mails = mails.sort((a,b)=> {return a.sentAt - b.sentAt})
+                  break;
             }
           }
           return mails

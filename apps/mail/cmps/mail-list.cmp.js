@@ -10,7 +10,7 @@ export default {
                         <mail-preview :mail="mail"/>
                         <section class="actions">
                             <!-- <button @click="showDetails(car)">Details</button> -->
-                            
+                        
                             <!-- <router-link :to="'/car/edit/' + car.id">Edit</router-link> | -->
                             <!-- <button @click="remove(car.id)">x</button> -->
                         </section>
@@ -21,6 +21,9 @@ export default {
             <!-- <router-view /> -->
             <!-- <router-link to="/mail/trash">Trash</router-link> -->
         </section>
+
+            <!-- <compose-screen></compose-screen> -->
+            <router-view></router-view>
             `,
     
    

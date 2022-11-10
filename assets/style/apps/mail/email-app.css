@@ -6,17 +6,47 @@ ul{
     margin: 0;
     padding: 0;
 }
+body{
+
+    position: relative;
+    min-height: 100vh;
+}
+.mail-app{
+    background-color:#F6F8FC;
+}
 .mail-list{
     flex-basis: 75%;
-   
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: white;
+    border-radius: 20px;
 }
 .mail-preview{
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
+    overflow: hidden;
+    column-count: 5;
+    column-gap: 10px;
+    page-break-inside: avoid;
+    
+    /* column-width: 190px; */
+    /* display: flex; */
+    /* justify-content: space-between; */
+    /* align-content: center; */
+
     padding: 3px;
+    border: 1px solid rgb(233, 232, 232);
 }
 
+.mail-preview > *{
+    margin-bottom: 0;
+    font-family:sans-serif;
+    font-size: 16px;
+    color: rgb(53, 53, 53);
+    padding: 5px;
+}
+
+.mail-preview p {
+
+}
 
 .mail-preview :hover{
     /* background-color: rgb(221, 177, 177); */
@@ -24,15 +54,26 @@ ul{
 
 .mail-filter{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    margin-right: 40px;
     gap: 10px;
     /* height: 30px; */
+    /* margin-right: 10%; */
     padding: 10px;
+    align-items: center;
 }
 
 .mail-filter input {
-    height: 10px;
+    height: 40px;
     width: 40%;
+    border: none;
+    border-radius: 10px;
+    background-color: #e0ecfc;
+    /* position: relative; */
+}
+
+.mail-filter ::placeholder{
+    color: rgb(73, 71, 71);
 }
 
 .mail-filter button{
@@ -42,19 +83,199 @@ ul{
     min-height: auto;
 }
 .folder-filter{
+    padding-top: 20px;
+    padding-bottom: 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     width: 20vw;
 }
-.folder-filter button {
+.folder-filter button:not(.compose-btn) {
     text-align: start;
     background-color: white;
     border-radius: 20px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
     border: 0px;
+    padding: 0;
+    min-height: 35px;
+    min-width: 20vw;
+    padding-left: 20px;
+}
+
+.folder-filter button:not(.compose-btn):hover {
+    background-color: #EBEBEB;
 }
 .mail-flex{
     display: flex;
     justify-content: start;
     gap: 10px;
 }
+
+.folder-filter .compose-btn{
+    background-color: #C2E7FF;
+    display: block;
+    min-width: none;
+    width: 60%;
+    padding: 20px;
+    border-radius: 20px;
+    border: none;
+}
+
+.logo{
+    width: 100px;
+    height: 30px;
+}
+
+.delete-mail-btn{
+    background-color: transparent;
+    border: none;
+    margin-left: 10px;
+}
+
+.mail-details{
+    background-color: white;
+    width: 75%;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.sort-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    top: 160px;
+    right: 40px;
+    background-color: rgba(255, 255, 255, 0.793);
+    padding: 0px;
+    overflow: hidden;
+    height: 0vh;
+    transition: height 0.6s;
+}
+
+.sort-container.shown{
+    height: 25vh;
+    transition: height 0.6s;
+    /* padding: 10px; */
+}
+
+.drop-down{
+    background-color: rgb(236, 236, 249);
+    padding: 13px;
+    border-radius: 40px;
+    border: none;
+}
+
+.sort-container button {
+    width: 100%;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1px solid rgb(199, 197, 197);
+}
+
+.compose-screen{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: 1px 5px 8px 0px;
+    position: absolute;
+    bottom: 0;
+    right: 10vw;
+    gap:20px;
+    padding: 20px;
+    padding-top: 0;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.compose-screen header{
+    display: flex;
+    justify-content: space-between;
+    /* background-color: rgb(236, 236, 249); */
+    width: 100%;
+    align-items: center;
+}
+
+.compose-screen header h4{
+    margin-bottom: 0;
+}
+
+.compose-screen header button {
+    min-width: none;
+    width: 10px;
+    background-color: transparent;
+    border: none;
+}
+
+.compose-screen input[type="text"] {
+    height: 10px;
+    /* border-radius: 20px; */
+    border: none;
+}
+.compose-screen input:focus{
+    outline: none;
+}
+.compose-screen input[type="textarea"] {
+    border: 1px solid rgb(217, 215, 215);
+    /* height: 100px; */
+}
+.compose-screen label {
+    
+    border-bottom: 1px solid rgb(225, 224, 224);
+}
+
+.compose-screen button{
+    background-color: #0b57d0;
+    /* color: white; */
+    font-weight: 500;
+    border: none;
+    padding: 30px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 30px;
+}
+ .trash-btns button {
+    background-color: transparent;
+    border: 0;
+ }
+
+ @media (max-width: 1000px){
+    .folder-filter{
+        min-width: 200px;
+    }
+    .folder-filter .compose-btn{
+        padding: 10px;
+    }
+ }
+ @media (max-width: 700px){
+    .mail-list{
+        /* text-align: center; */
+    }
+
+    .mail-flex{
+        justify-content: center;
+
+    }
+    .mail-preview{
+       display: flex;
+       align-items: center;
+       width: 350px;
+       flex-direction: column;
+        columns: 10px;
+    }
+
+    .logo{
+        display: none;
+    }
+
+    .folder-filter{
+        position: absolute;
+        left: 0;
+        height: 0vh;
+        overflow: hidden;
+        padding: 0;
+    }
+ }

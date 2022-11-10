@@ -2,27 +2,32 @@
 var defaultMails = [
         {
         id: 'e101',
+        name: 'Momo',
         subject: 'Miss you!',
         body: 'Would love to catch up sometimes',
         isRead: false,
-        sentAt : 1551133931594,
+        sentAt : 1551132931594,
         from: 'momo@momo.com',
         to: 'user@appsus.com',
         trashed: false,
+        isStarred: false,
         },
         {
         id: 'e102',
+        name: 'Rachel',
         subject: 'Call you!',
         body: 'How are you doing at work??',
         isRead: false,
-        sentAt : 1551133930594,
+        sentAt : 1551130930594,
         from: 'rachel@momo.com',
         to: 'user@appsus.com',
         trashed: false,
+        isStarred: false,
 
         },
         {
         id: 'e103',
+        name: 'Jimmy',
         subject: 'Catch you!',
         body: 'Its been a pleasure meeting up with you!',
         isRead: false,
@@ -30,10 +35,12 @@ var defaultMails = [
         from: 'jimmy@momo.com',
         to: 'user@appsus.com',
         trashed: false,
+        isStarred: false,
 
         }, 
         {
         id: 'e104',
+        name: 'Ilan',
         subject: 'From me!',
         body: 'Its my first email, fun!',
         isRead: false,
@@ -41,13 +48,14 @@ var defaultMails = [
         from: 'user@appsus.com',
         to: 'jimmy@momo.com',
         trashed: false,
+        isStarred: false,
 
         }, 
     ]
 
     const loggedinUser = {
         email: 'user@appsus.com',
-        fullname: 'Mahatma Appsus'
+        fullname: 'Ilan'
        }
 
 
@@ -64,6 +72,7 @@ export const mailService = {
     save,
     getEmptyMail,
     getUserDetails,
+    getNewMail,
 }
 
 function getUserDetails(){
@@ -94,12 +103,32 @@ function save(mail) {
 function getEmptyMail() {
     const email = {
         id: '',
+        name: '',
         subject: '',
         body: '',
         isRead: false,
-        sentAt : 0,
+        sentAt : Date.now(),
         from: '',
-        to: ''
+        to: '',
+        isStarred: false,
+
+        }
+        
+    return email
+}
+
+function getNewMail(msg) {
+    const email = {
+        id:'' ,
+        name: msg.name,
+        subject: msg.subject,
+        body: msg.body,
+        isRead: false,
+        sentAt : Date.now(),
+        from: msg.from,
+        to: msg.to,
+        isStarred: false,
+
         }
         
     return email

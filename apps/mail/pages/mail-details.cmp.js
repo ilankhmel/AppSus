@@ -2,12 +2,13 @@ import { mailService } from '../../mail/services/mail.service.js'
 export default {
     template: `
       <section v-if="mail" class="mail-details">
-          <button v-if="!mail.trashed" @click="trashMail" class="delete-mail-btn">Trash</button>
-          <div v-else>
-            <button @click="untrashMail">Untrash</button>
-            <button @click="deleteMail">Delete Permanently</button>
-          </div>
-          <router-link to="/mail">Back</router-link>
+          <router-link to="/mail"><i class="fa-solid fa-arrow-left"></i></router-link>
+          <button v-if="!mail.trashed" @click="trashMail" class="delete-mail-btn"><i class="fa-solid fa-trash"></i></button>
+            <span v-else class="trash-btns">
+              <button @click="untrashMail" title="Untrash"><i class="fa-solid fa-ban"></i></button>
+              <button @click="deleteMail" title="Delete Permanently"><i class="fa-solid fa-file-excel"></i></button>
+            </span>
+            <router-link :to="'list/send/' + mail.id">reply</router-link>
             <!-- <hr /> -->
             <!-- <h1>Detals</h1> -->
             <!-- <pre>{{ mail }}</pre> -->
