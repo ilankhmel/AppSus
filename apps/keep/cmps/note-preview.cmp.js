@@ -9,7 +9,7 @@ export default {
   props: ['note'],
   template: `
         <section class="note-preview-container" @mouseover="showControlers" @mouseout="hideControlers" :style="note.style" >
-            <component :is="note.type" :info="note.info" :edit="editMode" @doneEditTodo="onDoneEditTodo" @doneEditText="onDoneEditText" @doneEditSrc="onDoneEditSrc" :key="note.key"></component>
+            <component :is="note.type" :note="note" :info="note.info" :edit="editMode" @doneEditTodo="onDoneEditTodo" @doneEditText="onDoneEditText" @doneEditSrc="onDoneEditSrc" :key="note.key"></component>
             <div v-if="colorMenu" class="colors-container" title="Background options">
             <span :style="{backgroundColor:'#f28B82'}" title="Red" @click.stop="setBcg('#f28B82')"></span>
             <span :style="{backgroundColor:'#FBBC04'}" title="Orange" @click.stop="setBcg('#FBBC04')"></span>
@@ -21,7 +21,7 @@ export default {
             <span :style="{backgroundColor:'#D7AEFB'}" title="Purple" @click.stop="setBcg('#D7AEFB')"></span>
             <span :style="{backgroundColor:'#FDCFE8'}" title="Pink" @click.stop="setBcg('#FDCFE8')"></span>
             <span :style="{backgroundColor:'#E6C9A8'}" title="Brown" @click.stop="setBcg('#E6C9A8')"></span>
-            <span :style="{backgroundColor:'#E8EAED'}" title="White" @click.stop="setBcg('#E8EAED')"></span>
+            <span :style="{backgroundColor:'#E8EAED'}" title="default" @click.stop="setBcg('#E8EAED')"></span>
             </div>
             <div v-show="controlers" class="note-controlers">
                 <button title="Pin note" @click.stop="togglePin">
@@ -76,6 +76,7 @@ export default {
     deleteNote(noteId) {
       noteService.deleteNote(noteId).then((notes) => {
         this.notes = notes;
+        this.$emit('onNewNotes');
       });
     },
     toggleEdit() {
@@ -92,6 +93,7 @@ export default {
     makeNoteCopy() {
       noteService.copyNote(this.note).then((notes) => {
         this.notes = notes;
+        this.$emit('onNewNotes');
       });
     },
     onDoneEditSrc(done, newUrl) {
@@ -101,6 +103,7 @@ export default {
         .updateNoteElement(this.note.id, `[info][url]`, newUrl)
         .then((notes) => {
           this.notes = notes;
+          this.$emit('onNewNotes');
         });
     },
     onDoneEditText(done, txt) {
@@ -110,12 +113,14 @@ export default {
         .updateNoteElement(this.note.id, '[info][txt]', txt)
         .then((notes) => {
           this.notes = notes;
+          this.$emit('onNewNotes');
         });
     },
     onDoneEditTodo(done, todosTxt) {
       this.editMode = done;
       const todoArr = JSON.parse(JSON.stringify(todosTxt));
       noteService.updateTodoNote(this.note.id, todoArr);
+      this.$emit('onNewNotes');
     },
   },
   computed: {

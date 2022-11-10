@@ -7,12 +7,12 @@ export default {
     <div v-if="notes">
         <!-- <div class="note-container" v-for="(note,idx) in notes" :key="idx"> -->
          
-            <h3 :class="notesHeader"> {{ notesHeader }} </h3>
+            <!-- <h3 :class="notesHeader"> {{ notesHeader }} </h3> -->
       
         <!-- <draggable v-bind="dragOptions" class="drag-zone" tag="div" :notes="notes"  @start="drag=true" @end="drag=false">
                     <transition-group class="transition-container flex wrap" type="transition"  :name="!drag ? 'flip-list' : null"> -->
           <div class="note-container" v-for="(note,idx) in notes" :key="idx">
-               <note-preview :note="note"/>            
+               <note-preview :note="note" @onNewNotes="newNotes"/>            
           </div>
                     <!-- </transition-group>
             </draggable>   -->
@@ -45,6 +45,12 @@ export default {
   },
   components: {
     notePreview,
+  },
+  methods: {
+    newNotes() {
+      this.$emit('onNewNotes');
+      console.log('hi, aba');
+    },
   },
 };
 

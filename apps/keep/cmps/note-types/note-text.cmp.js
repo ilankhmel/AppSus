@@ -1,6 +1,6 @@
 export default {
   name: 'note-text',
-  props: ['info', 'edit'],
+  props: ['info', 'edit', 'note'],
   template: `
       <div class="text-container">
               <div v-if="!edit">

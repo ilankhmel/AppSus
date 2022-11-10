@@ -2,6 +2,7 @@
     height: 90vh;
     background-color: #ffffff;
     padding-inline-start: 50px;
+    font-family: 'roboto-regular';
 }
 
 
@@ -19,8 +20,8 @@
 
 .search-notes {
     display: flex;
+    background: #f1f3f4;
     align-items: center;
-    background-color: #ffffff;
     padding: .75rem;
     height: 50px;
     border-radius: 7.5px;
@@ -32,10 +33,12 @@
 
 .search-notes select {
     margin-inline-start: .25rem;
+    background: #f1f3f4;
     padding: .4rem 1rem;
-    font-family: roboto-regular;
+    font-family: 'roboto-regular';
     box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302), 0 1px 3px 1px rgba(60, 64, 67, 0.149);
     border: none;
+    border-radius: 5px;
 }
 
 .search-notes option {
@@ -44,11 +47,11 @@
 
 .search-notes:hover {
     box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.302), 0 4px 8px 3px rgba(60, 64, 67, 0.149);
-    background-color: #fff;
+    background-color:#f1f3f4;
 }
 
 .search-notes input {
-    background-color: inherit;
+    background: #f1f3f4;
     border: none;
     outline: none;
     font-size: 1rem;
@@ -56,7 +59,7 @@
 }
 
 .search-notes button {
-    background-color: inherit;
+    background-color: #f1f3f4;
     border: none;
 }
 
@@ -68,19 +71,14 @@
 }
 
 .columns {
-    /* column-width: 225px; */
     column-count: 4;
 	column-gap: 15px;
-	/* width: 90%;
-	max-width: 1100px;
-	margin: 50px auto; */ 
 }
-
-.pinned-group-header {
-    display: block;
-}
-.pinned {
-    padding-block-start: 40px;   
+.pinned-group-header h4 {
+    font-family: 'roboto-regular';
+    padding-block-start: 40px;  
+    padding-inline-start: 20px;
+    font-size: 11px;
 }
 
 .pinned h3 {
