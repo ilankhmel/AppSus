@@ -4,6 +4,7 @@ import keepApp from './apps/keep/pages/keep-app.cmp.js';
 import mailApp from './apps/mail/pages/mail-app.cmp.js';
 import mailDetails from './apps/mail/pages/mail-details.cmp.js';
 import mailList from './apps/mail/cmps/mail-list.cmp.js';
+import composeScreen from './apps/mail/cmps/compose-screen.cmp.js'
 
 const { createRouter, createWebHashHistory } = VueRouter;
 
@@ -26,6 +27,12 @@ const routerOptions = {
         {
             path: 'list',
             component: mailList,
+            children: [
+              {
+                path: 'send/:id?',
+                component: composeScreen,
+              },
+            ],
         },                
         {
           path: 'sent',
