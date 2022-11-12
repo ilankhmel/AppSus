@@ -3,7 +3,7 @@ export default {
        <header class="app-header">
     
             <router-link to="/">
-            <img class='site-logo' src='../assets/img/AppSus.png' alt="" />
+            <img class='site-logo' src='assets/img/AppSus.png' alt="" />
             </router-link>
             <router-link to="/"><h1>AppSus</h1></router-link>
        

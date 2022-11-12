@@ -28,13 +28,13 @@ export default {
                 </div>
                 <div>
                     <router-link to="/keep">
-                    <img class="app-logo" src="../assets/imgs/mail.png" alt="" />
+                    <img class="app-logo" src="assets/imgs/mail.png" alt="" />
                     </router-link> 
                 </div>
             </section>
             <section class="big keep-section flex flex-column">
                 <div class="app-img flex flex-row">
-                    <img class="app-img" src="../assets/imgs/keep.png" alt="" />
+                    <img class="app-img" src="assets/imgs/keep.png" alt="" />
                     <h1>Keep</h1> 
                 </div>
                 <div class="about-app">
@@ -42,7 +42,7 @@ export default {
                 </div>
                 <div>
                     <router-link to="/mail">
-                    <img class="app-logo" src="../assets/imgs/keepapp.png" alt="" />
+                    <img class="app-logo" src="assets/imgs/keepapp.png" alt="" />
                     </router-link> 
                 </div>
             </section>
