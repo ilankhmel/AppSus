@@ -1,3 +1,8 @@
+.add-note-container {
+    align-items: center;
+    justify-content: center;
+}
+
 .input-container input {
     border: none;
     outline: 0;
@@ -8,18 +13,15 @@
 }
 
 .input-container {
+    flex-wrap: wrap;
+    flex-direction: column;
     background-color: #fff;
     padding: .45rem;
     padding-inline-start: 1rem;
     margin: 1rem auto;
-    box-shadow: 1px 2px 0 rgba(60, 64, 67, 0.302), 
-                0 1px 3px 1px rgba(60, 64, 67, 0.149);
+    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
-}
-
-.input-container:hover {
-    box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.302),
-                0 4px 8px 3px rgba(60, 64, 67, 0.149);
 }
 
 .input-container button:not(:last-of-type) {

@@ -1,4 +1,6 @@
 import { noteService } from '../services/note.service.js';
+import { showNormalMsg } from '../../../services/event-bus.service.js';
+
 import noteText from './note-types/note-text.cmp.js';
 import noteTodos from './note-types/note-todos.cmp.js';
 import noteImg from './note-types/note-img.cmp.js';
@@ -21,7 +23,8 @@ export default {
             <span :style="{backgroundColor:'#D7AEFB'}" title="Purple" @click.stop="setBcg('#D7AEFB')"></span>
             <span :style="{backgroundColor:'#FDCFE8'}" title="Pink" @click.stop="setBcg('#FDCFE8')"></span>
             <span :style="{backgroundColor:'#E6C9A8'}" title="Brown" @click.stop="setBcg('#E6C9A8')"></span>
-            <span :style="{backgroundColor:'#E8EAED'}" title="default" @click.stop="setBcg('#E8EAED')"></span>
+            <span :style="{backgroundColor:'#E8EAED'}" title="Grey" @click.stop="setBcg('#E8EAED')"></span>
+            <span :style="{backgroundColor:'#FFFFFF'}" title="default" @click.stop="setBcg('#FFFFFF')"></span>
             </div>
             <div v-show="controlers" class="note-controlers">
                 <button title="Pin note" @click.stop="togglePin">
@@ -40,6 +43,7 @@ export default {
                   <i class="fas fa-trash"></i>
                 </button>
             </div>
+            <div class="space"></div>
         </section>
     `,
   data() {
@@ -59,13 +63,9 @@ export default {
     },
     toggleColorMenu() {
       this.colorMenu = !this.colorMenu;
-      console.log(this.colorMenu);
     },
     setBcg(color) {
-      console.log(color);
-      console.log(this.note.style);
       this.note.style.backgroundColor = color;
-      console.log(color);
       this.colorMenu = false;
       noteService
         .updateNoteElement(this.note.id, 'backgroundColor', color)
@@ -74,13 +74,21 @@ export default {
         });
     },
     deleteNote(noteId) {
-      noteService.deleteNote(noteId).then((notes) => {
-        this.notes = notes;
-        this.$emit('onNewNotes');
-      });
+      noteService
+        .deleteNote(noteId)
+        .then((notes) => {
+          showNormalMsg(`Note ${noteId} was deleted`);
+          this.notes = notes;
+          this.$emit('onNewNotes');
+        })
+        .catch((err) => {
+          console.log('OOPS', err);
+          showNormalMsg('Cannot remove note');
+        });
     },
     toggleEdit() {
-      this.toggleEdit = !this.toggleEdit;
+      this.editMode = !this.editMode;
+      console.log(this.editMode);
     },
     togglePin() {
       this.note.isPinned = !this.note.isPinned;
@@ -91,36 +99,49 @@ export default {
         });
     },
     makeNoteCopy() {
-      noteService.copyNote(this.note).then((notes) => {
-        this.notes = notes;
-        this.$emit('onNewNotes');
-      });
+      noteService
+        .copyNote(this.note)
+        .then((notes) => {
+          showNormalMsg(`Note ${noteId} was copied`);
+          this.notes = notes;
+          this.$emit('onNewNotes');
+        })
+        .catch((err) => {
+          console.log('OOPS', err);
+          showNormalMsg('Cannot copy note');
+        });
     },
-    onDoneEditSrc(done, newUrl) {
+    onDoneEditSrc(done, newUrl, newTitle) {
       this.editMode = done;
       this.note.info.url = newUrl;
+      this.note.info.title = newTitle;
       noteService
-        .updateNoteElement(this.note.id, `[info][url]`, newUrl)
+        .updateNoteUrl(this.note.id, newUrl, newTitle)
         .then((notes) => {
           this.notes = notes;
           this.$emit('onNewNotes');
         });
     },
-    onDoneEditText(done, txt) {
+    onDoneEditText(done, newTitle, newTxt) {
       this.editMode = done;
-      this.note.info.txt = txt;
+      if (newTitle) this.note.info.title = newTitle;
+      if (newTxt) this.note.info.txt = newTxt;
       noteService
-        .updateNoteElement(this.note.id, '[info][txt]', txt)
+        .updateNoteTxt(this.note.id, newTitle, newTxt)
         .then((notes) => {
           this.notes = notes;
           this.$emit('onNewNotes');
         });
     },
-    onDoneEditTodo(done, todosTxt) {
+    onDoneEditTodo(done, todoTitle, todosTxt) {
       this.editMode = done;
       const todoArr = JSON.parse(JSON.stringify(todosTxt));
-      noteService.updateTodoNote(this.note.id, todoArr);
-      this.$emit('onNewNotes');
+      noteService
+        .updateTodoNote(this.note.id, todoTitle, todoArr)
+        .then((notes) => {
+          this.notes = notes;
+          this.$emit('onNewNotes');
+        });
     },
   },
   computed: {
