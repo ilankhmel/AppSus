@@ -10,7 +10,7 @@ export default {
             <span @click.stop.prevent="toggleRead"><i :class="envelopeType"></i></i></span>
             <h2 :style="txtStyle">{{ mail.name }}</h2>
             <!-- <p class="subject">{{ mail.subject }}</p> -->
-            <p class="body" :style="txtStyle">{{ mail.body }}</p>
+            <p class="body" :style="txtStyle">{{ formatBody }}</p>
             <p class="date" :style="txtStyle">{{ formatDate }}</p>
         </article>
     <!-- </div> -->
@@ -22,6 +22,9 @@ export default {
     },
 
     computed:{
+        formatBody(){
+            return this.mail.body.slice(0, 50)
+        },
         prevStyle(){
             return (this.mail.isRead) ? {backgroundColor: '#EAF1FB'} : {backgroundColor: 'white'}
         },

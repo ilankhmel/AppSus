@@ -40,14 +40,92 @@ var defaultMails = [
         label: 'A',
         }, 
         {
-        id: 'e104',
-        name: 'Ilan',
-        subject: 'From me!',
-        body: 'Its my first email, fun!',
+        id: 'e105',
+        name: 'Charlie',
+        subject: 'Glad to see you!',
+        body: 'Why You Shouldn’t Dismiss Plain Text Emails (And How to Make Them Engaging)',
         isRead: false,
         sentAt : 1551132930294,
         from: 'user@appsus.com',
-        to: 'jimmy@momo.com',
+        to: 'Charlie@momo.com',
+        trashed: false,
+        isStarred: false,
+        label: '',
+        }, 
+        {
+        id: 'e106',
+        name: 'Dan',
+        subject: 'Hi!',
+        body: 'Plain text emails are just that—simple emails that only include plain text.',
+        isRead: false,
+        sentAt : 1551132930294,
+        from: 'user@appsus.com',
+        to: 'Dan@momo.com',
+        trashed: false,
+        isStarred: false,
+        label: '',
+        }, 
+        {
+        id: 'e107',
+        name: 'Rick',
+        subject: 'They are the email equivalent ',
+        body: 'they play a significant role in a well-rounded email marketing strategy.',
+        isRead: false,
+        sentAt : 1551132930294,
+        from: 'user@appsus.com',
+        to: 'Rick@momo.com',
+        trashed: false,
+        isStarred: false,
+        label: '',
+        }, 
+        {
+        id: 'e108',
+        name: 'Tal',
+        subject: 'focusing on why they’re important',
+        body: 'while providing plenty of plain text email examples along the way.',
+        isRead: false,
+        sentAt : 1551132930294,
+        from: 'user@appsus.com',
+        to: 'Tal@momo.com',
+        trashed: false,
+        isStarred: false,
+        label: '',
+        }, 
+        {
+        id: 'e109',
+        name: 'Bar',
+        subject: 'One reason you should still use plain text ',
+        body: 'Many emails are automatically sent with them! Even when you’re our email marketing campaigns—bundles together a simplified plain text version of your email along with the HTML version of your email.',
+        isRead: false,
+        sentAt : 1551132930294,
+        from: 'user@appsus.com',
+        to: 'Bar@momo.com',
+        trashed: false,
+        isStarred: false,
+        label: '',
+        }, 
+        {
+        id: 'e110',
+        name: 'Ravit',
+        subject: 'Spam filters like to see a plain text alternative.  me!',
+        body: 'email clients give the option to only receive the text version of an email, it’s important to send in multi-part MIME format. Otherwise, subscribers may not receive your email at all.',
+        isRead: false,
+        sentAt : 1551132930294,
+        from: 'user@appsus.com',
+        to: 'Rav@momo.com',
+        trashed: false,
+        isStarred: false,
+        label: '',
+        }, 
+        {
+        id: 'e111',
+        name: 'Michael',
+        subject: 'show the raw HTML of the message or try to format it into plain text',
+        body: 'When researching examples for this post, we were surprised by the number of senders not using multi-part MIME—including brands who otherwise excel in their email marketing strategy. Between deliverability and accessibility issues, sending in that format should be a no-brainer.',
+        isRead: false,
+        sentAt : 1551132930294,
+        from: 'user@appsus.com',
+        to: 'Michael@momo.com',
         trashed: false,
         isStarred: false,
         label: '',
@@ -79,6 +157,7 @@ export const mailService = {
     getNewMail,
     getLabels,
     addLabel,
+    removeLabel,
 }
 
 function getUserDetails(){
@@ -179,4 +258,12 @@ function addLabel(labelName){
     utilService.saveToStorage('labels', labels)
     console.log(labels);
     return labels
+}
+
+function removeLabel(labelName){
+    var labels = utilService.loadFromStorage('labels')
+    var idx = labels.findIndex((label)=> label.name === labelName) 
+    labels.splice(idx, 1)
+    utilService.saveToStorage('labels', labels)
+    return new Promise(resolve => setTimeout(() => resolve(labels), 200))
 }

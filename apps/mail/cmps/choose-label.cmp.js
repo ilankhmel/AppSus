@@ -5,12 +5,12 @@ export default {
     template: `
         <div>
                 <h1>Choose Label</h1>
+                <p>Label Chosen: {{ chosenLabel }}</p>
                 <select @click="setLabel" >
                     <option v-if="labels"  v-for="label in labels" :key="label.name" @input="set"> 
                             {{ label.name }}               
                     </option> 
                 </select>
-                <!-- <pre>Label Chosen: {{ chosenLabel }}</pre> -->
                 <button @click="setMail" class="accept">OK</button>
         </div>
     `,

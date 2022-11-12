@@ -5,6 +5,7 @@
     gap: 10px;
     width: 20vw;
     max-width: 205px;
+
 }
 .folder-filter button:not(.compose-btn) {
     text-align: start;
@@ -27,6 +28,7 @@
     justify-content: start;
     padding-left: 5px;
     padding-top: 20px;
+    padding-bottom: 20px;
     gap: 10px;
 }
 
@@ -60,6 +62,20 @@
     color: rgba(239, 64, 0, 0.797);   
 }
 
+.label-btn-flex{
+    display: flex;
+    justify-content: space-between;
+}
+.remove-label-btn{
+    padding-left: 5px;
+    padding-right: 20px;
+    /* font-size: 0px; */
+    display: none;
+}
+
+.label-btn:hover .remove-label-btn{
+    display: block;
+}
 @media (max-width: 1000px){
     .folder-filter{
         min-width: 206px;

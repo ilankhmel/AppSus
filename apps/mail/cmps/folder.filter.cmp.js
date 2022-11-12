@@ -13,7 +13,7 @@ export default {
             <!-- <span>{{ mails.length }}</span> -->
         </div>
         <button @click="setFolder('trash')" :class="{ 'clicked-folder' : btnClicked === 'trash'}"><i class="fa-solid fa-trash fa-fw "></i> Trash</button>
-        <button @click="setFolder('draft')" :class="{ 'clicked-folder' : btnClicked === 'draft'}"><i class="fa-solid fa-ruler fa-fw"></i> Draft</button>
+        <!-- <button @click="setFolder('draft')" :class="{ 'clicked-folder' : btnClicked === 'draft'}"><i class="fa-solid fa-ruler fa-fw"></i> Draft</button> -->
         <button @click="setFolder('sent')" :class="{ 'clicked-folder' : btnClicked === 'sent'}"><i class="fa-solid fa-paper-plane fa-fw"></i> Sent</button>
         <button @click="setFolder('star')" :class="{ 'clicked-folder' : btnClicked === 'star'}"><i class="fa-solid fa-star fa-fw" style="color:#726d6d"></i> Starred</button>
         <div className="label-adder">
@@ -23,7 +23,12 @@ export default {
         </div>
             <ul>
                 <div v-if="labels" v-for="label in labels">    
-                    <button @click="updateLabelFilter(label.name)" :class="{ 'clicked-folder' : btnClicked === label.name}"><i class="fa-solid fa-tag fa-fw"></i> {{ label.name }}</button>
+                    <button class="label-btn" @click="updateLabelFilter(label.name)" :class="{ 'clicked-folder' : btnClicked === label.name}">
+                        <div className="label-btn-flex">
+                            <div><i class="fa-solid fa-tag fa-fw"></i> {{ label.name }}</div>
+                            <div @click.stop="removeLabel(label.name)" class="remove-label-btn">x</div>
+                        </div>
+                    </button>
                 </div>
             </ul>
            
@@ -48,6 +53,13 @@ export default {
     },
 
     methods: {
+        removeLabel(name){
+            mailService.removeLabel(name)
+                .then((label)=>{
+                    this.loadLabels()
+                    eventBus.emit('refresh')
+                })
+        },
         updateLabelFilter(name){
             this.$emit('setfolder', '')
             console.log(name);
