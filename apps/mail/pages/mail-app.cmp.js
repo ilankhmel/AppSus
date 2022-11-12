@@ -3,32 +3,49 @@ import { eventBus } from "../../../services/event-bus.service.js";
 import mailFilter from '../cmps/mail-filter.cmp.js'
 import folderFilter from '../cmps/folder.filter.cmp.js'
 import mailList from '../cmps/mail-list.cmp.js'
+import labelModal from '../cmps/label-modal.cmp.js'
+import chooseLabelModal from '../cmps/choose-label.cmp.js'
 
 export default {
   template: `
       <section class="mail-app">
         <!-- <h1>MailApp</h1> -->
-        <mail-filter @filter="setFilter"></mail-filter>
+        <!-- <mail-filter @filter="setFilter"></mail-filter> -->
         <div class="mail-flex">
-          <folder-filter @setfolder="setFolder"></folder-filter>
+          <folder-filter :mails="mails" @setfolder="setFolder"></folder-filter>
           <!-- <mail-list @opened="markRead" :mails="mailsToShow"  /> -->
           <router-view @opened="markRead" @trashed="trashMail" @untrashed="untrashMail" @deleted="deleteMail" :mails="mailsToShow"/>
         </div>
+        <!-- <div class="label-modal" :class="modalStyle">
+                <h1>New Label</h1>
+                <label>New labels's name"</label>
+                <input type="text" />
+                <button>Accept</button>
+                <button>Cancel</button>
+        </div> -->
+        <label-modal class="label-modal" :class="modalStyle" />
+        <choose-label-modal class="label-modal" :class="chooseModalStyle" :mail="chosenMail" />
         <!-- <router-link v-if="mails" to="/mail/inbox" @opened="markRead" :mails="mailsToShow">Inbox</router-link> -->
         <!-- <router-view></router-view> -->
+        <div :class="screenStyle" class="main-screen" @click="closeScreens"></div>
       </section>
     `,
 
     data(){
       return {
         mails: null,
+        isChooseLabelModalShown: false,
+        chosenMail: '',
         filterBy: {
           name: '',
           isRead: '',
-          folder: '',
+          folder: 'inbox',
           sort: "",
+          label: "",
         },
         isShown: false,
+        isScreenShown: false,
+        isModalShown: false,
       }
     },
 
@@ -39,10 +56,49 @@ export default {
         //     this.mails = mails
         //     }).then(console.log(this.mails))
         this.loadMails()
+
+
+        eventBus.on('updateLabelFilter', this.setLabel)
+        eventBus.on('refresh', this.loadMails)
+        eventBus.on('closeChooseLabelModal', this.closeChooseLabelModal)
+        eventBus.on('showChooseLabelModal', this.showChooseLabelModal)
+        eventBus.on('showModal', this.showModal)
+        eventBus.on('closeAddLabelModal', this.closeAddLabelModal)
+        eventBus.on('closeScreen', this.closeScreen)
+        eventBus.on('showScreen', this.showScreen)
+        eventBus.on('filter', this.setFilter)
         eventBus.on('msgSent', this.loadMails)
         eventBus.on('saveRefresh', this.saveAndRefresh)
     },
     methods:{
+      showModal(){
+        this.isModalShown = true
+      },
+      closeAddLabelModal(){
+        this.isModalShown = false
+      },
+      showChooseLabelModal(mail){
+        this.isChooseLabelModalShown = true
+        this.chosenMail = mail
+      },
+      closeChooseLabelModal(){
+        this.isChooseLabelModalShown = false
+      },
+
+      closeScreens(){
+        this.isScreenShown = false;
+        this.isModalShown = false,
+        this.isChooseLabelModalShown = false;
+        eventBus.emit('closeMenu')
+        
+      },
+      closeScreen(){
+        this.isScreenShown = false;
+      },
+      showScreen(){
+          this.isScreenShown = true
+      },
+      
       saveAndRefresh(mail){
         mailService.save(mail)
           .then(a => {
@@ -75,6 +131,13 @@ export default {
           this.mails = mails
           })
       },
+
+      setLabel(name){
+        this.filterBy.label = name
+        this.loadMails()
+        console.log(this.filterBy.label);
+      },
+
       setFilter(filter){
         this.filterBy.name = filter.name
         this.filterBy.isRead = filter.isRead
@@ -106,10 +169,19 @@ export default {
       }
     },
     computed:{
+      chooseModalStyle(){
+          return (this.isChooseLabelModalShown) ? 'shownModal' : ''
+      },
+      modalStyle(){
+        return (this.isModalShown) ? 'shownModal' : ''
+      },
+      screenStyle(){
+        return (this.isScreenShown) ? 'shown' : ''
+      },
         mailsToShow(){
           console.log(this.filterBy);
           const regex = new RegExp(this.filterBy.name, 'i')
-          var mails = this.mails.filter(mail => regex.test(mail.body))
+          var mails = this.mails.filter(mail => regex.test(mail.subject))
           if(this.filterBy.isRead !== ''){
           mails = mails.filter(mail => mail.isRead === this.filterBy.isRead)
           }
@@ -161,6 +233,10 @@ export default {
                   break;
             }
           }
+
+          if(this.filterBy.label !== ''){
+            mails = mails.filter((mail)=> mail.label === this.filterBy.label)
+          }
           return mails
         }
     },
@@ -168,6 +244,8 @@ export default {
         mailList,
         mailFilter,
         folderFilter,
+        labelModal,
+        chooseLabelModal,
     }
 };
 
