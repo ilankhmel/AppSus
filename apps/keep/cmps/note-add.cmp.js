@@ -15,14 +15,9 @@ export default {
                 <input  
                 v-show="(noteType ==='note-text')" placeholder="Title" @keyup.enter.prevent="addNote(newNote)"  v-model="newNote.info.title"/>
                 <input  
-<<<<<<< HEAD
                 v-show="(noteType!=='note-todos')" :placeholder="PLACE_HOLDERS[noteType] || 'Take a note...' " @keyup.enter.prevent="addNote(newNote)"  v-model="newNote.info.txt"/>
         
                 <todos-edit v-if="noteType==='note-todos'"/>
-=======
-                v-show="(note-type!=='note-todos')" :placeholder="PLACE_HOLDERS[note-type] || 'Take a note...' " @keyup.enter.prevent="addNote(newNote)"  v-model="txt"/>
-                <todosEdit v-if="(note-type==='note-todos')"></todosEdit>
->>>>>>> 821fbbb22fba2d425801b22775f40eb240a9b0e9
                 <div class="btn-setters">
                     <button title="Text" @click="setType('note-text')">
                         <i class="fas fa-font"></i>
@@ -44,12 +39,9 @@ export default {
 
   data() {
     return {
-<<<<<<< HEAD
+
+      
       noteType: '',
-=======
-      txt:"",
-      noteType: 'note-text',
->>>>>>> 821fbbb22fba2d425801b22775f40eb240a9b0e9
       newNote: null,
 
       //   anotherLine: false,

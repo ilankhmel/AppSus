@@ -11,45 +11,15 @@ header h1 {
 
 header a{
   margin-right: 20px;
+
 }
 .app-header {
-<<<<<<< HEAD
-  background-color: #FFFFFF;
-  color: #606060;
-=======
   background-color: white;
-  
-  color: rgb(48, 47, 47);
->>>>>>> 821fbbb22fba2d425801b22775f40eb240a9b0e9
-  padding: 1em;
-  height: 7vh;
-  /* border-bottom:0.8px solid #606060; */
-  font-family: 'roboto-regular';
-}
-.app-header h1 {
-  margin-block-end: 0;
-}
-.app-header nav {
-  display: flex;
   align-items: center;
-}
-.app-header h4 {
-  margin-block-end: 0px;
-  display: flex;
-  align-self: baseline;
-justify-self: end;
+  color: rgb(48, 47, 47);
+  padding: 1em;
 }
 
-<<<<<<< HEAD
-.app-header a {
-  display: flex;
-  align-content: center;
-  justify-content: baseline;
-}
-
-.app-header nav a:hover {
-  text-decoration: underline;
-=======
 .app-header h1{
   font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   margin-right: 10px;
@@ -58,10 +28,10 @@ justify-self: end;
   width: 50px;
 
 
->>>>>>> 821fbbb22fba2d425801b22775f40eb240a9b0e9
 }
 @media(max-width: 720px) {
   .app-header {
- 
+    background-color: var(--clr3);
+    color: var(--secondary-clr2);
   }
 }
