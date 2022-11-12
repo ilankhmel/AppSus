@@ -1,8 +1,10 @@
 import mailPreview from './mail-prevew.cmp.js'
+import mailFilter from './mail-filter.cmp.js'
 export default {
     props:['mails'],
     template: `
         <section class="mail-list">
+            <mail-filter></mail-filter>
             <ul>
                 <li v-for="mail in mails" :key="mail.id">
                     <router-link :to="'/mail/' + mail.id" @click="mailOpened(mail)">
@@ -29,6 +31,7 @@ export default {
    
     components: {
         mailPreview,
+        mailFilter
     },
 
 

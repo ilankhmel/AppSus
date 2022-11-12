@@ -1,6 +1,26 @@
+header{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: start;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header a{
+  margin-right: 20px;
+}
 .app-header {
+<<<<<<< HEAD
   background-color: #FFFFFF;
   color: #606060;
+=======
+  background-color: white;
+  
+  color: rgb(48, 47, 47);
+>>>>>>> 821fbbb22fba2d425801b22775f40eb240a9b0e9
   padding: 1em;
   height: 7vh;
   /* border-bottom:0.8px solid #606060; */
@@ -20,6 +40,7 @@
 justify-self: end;
 }
 
+<<<<<<< HEAD
 .app-header a {
   display: flex;
   align-content: center;
@@ -28,6 +49,16 @@ justify-self: end;
 
 .app-header nav a:hover {
   text-decoration: underline;
+=======
+.app-header h1{
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  margin-right: 10px;
+}
+.site-logo{
+  width: 50px;
+
+
+>>>>>>> 821fbbb22fba2d425801b22775f40eb240a9b0e9
 }
 @media(max-width: 720px) {
   .app-header {

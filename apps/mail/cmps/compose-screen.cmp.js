@@ -17,7 +17,7 @@ export default {
                 </label>
                 <input v-model="msg.body" type="textarea" />
                 <footer>
-                    <button @click="sendMsg">Send</button>
+                    <button @click="sendMsg" class="send-compose-btn">Send</button>
                 </footer>
                 <!-- <pre>{{msg}}</pre> -->
         </div>
@@ -52,7 +52,10 @@ export default {
                 this.msg.name = details.fullname
                 const msg = mailService.getNewMail(this.msg)
                 mailService.save(msg)
-                    .then(msg => eventBus.emit('msgSent'))
+                    .then(msg =>{
+                         eventBus.emit('msgSent')
+                        this.$router.push('/mail/list')
+                        })
                 // })
             
         },
