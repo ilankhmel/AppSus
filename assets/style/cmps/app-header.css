@@ -11,7 +11,18 @@ header h1 {
 
 header a{
   margin-right: 20px;
-
+}
+header nav a:hover {
+text-decoration: underline;
+}
+.app-header {
+  width: 100%;
+  /* justify-content: space-between; */
+}
+.app-header .logo-section {
+  flex-wrap: nowrap;
+  width: 250px;
+  flex-direction: row;
 }
 .app-header {
   background-color: white;
@@ -29,8 +40,4 @@ header a{
 .site-logo{
   width: 50px;
 }
-@media(max-width: 720px) {
-  .app-header {
- 
-  }
-}
+
