@@ -7,6 +7,9 @@
 .flex.flex-column{
     flex-direction: column;
 }
+.flex.flex-row{
+    flex-direction: row;
+}
 
 .flex.justify-center{
     justify-content: center;
@@ -20,6 +23,7 @@
     align-items: center;
 }
 
+column
 /* text helpers */
 
 .colored-text {
