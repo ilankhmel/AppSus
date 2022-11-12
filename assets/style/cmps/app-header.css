@@ -1,9 +1,33 @@
+header{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: start;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header a{
+  margin-right: 20px;
+}
 .app-header {
-  background-color: var(--clr5);
-  color: var(--secondary-clr1);
+  background-color: white;
+  
+  color: rgb(48, 47, 47);
   padding: 1em;
 }
 
+.app-header h1{
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  margin-right: 10px;
+}
+.site-logo{
+  width: 50px;
+
+
+}
 @media(max-width: 720px) {
   .app-header {
     background-color: var(--clr3);

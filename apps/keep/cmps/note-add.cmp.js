@@ -12,7 +12,7 @@ export default {
         <section class="flex" v-if="newNote">
             <div class="input-container flex wrap">
                 <input  
-                v-show="(note-type!=='note-todos')" :placeholder="PLACE_HOLDERS[note-type] || 'Take a note...' " @keyup.enter.prevent="addNote(newNote)"  v-model="newNote.info.txt"/>
+                v-show="(note-type!=='note-todos')" :placeholder="PLACE_HOLDERS[note-type] || 'Take a note...' " @keyup.enter.prevent="addNote(newNote)"  v-model="txt"/>
                 <todosEdit v-if="(note-type==='note-todos')"></todosEdit>
                 <div class="btn-setters">
                     <button title="Text" @click="setType('note-text')">
@@ -35,6 +35,7 @@ export default {
 
   data() {
     return {
+      txt:"",
       noteType: 'note-text',
       newNote: null,
       //   anotherLine: false,
@@ -50,6 +51,8 @@ export default {
       this.noteType = type;
       noteService.getEmptyNoteByType(type).then((note) => {
         this.newNote = note;
+        this.newNote.info.url = this.txt
+        this.addNote(this.note)
       });
     },
     addNote(newNote) {

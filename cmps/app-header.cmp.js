@@ -1,6 +1,7 @@
 export default {
   template: `
         <header class="app-header">
+            <img class='site-logo' src='../assets/img/AppSus.png' alt="" />
             <h1>AppSus</h1>
             <nav>
                 <router-link to="/">Home</router-link> 
@@ -11,3 +12,4 @@ export default {
         </header>
     `,
 };
+// import '../assets/img/AppSus.png'

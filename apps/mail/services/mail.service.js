@@ -11,6 +11,7 @@ var defaultMails = [
         to: 'user@appsus.com',
         trashed: false,
         isStarred: false,
+        label: ',A'
         },
         {
         id: 'e102',
@@ -23,7 +24,7 @@ var defaultMails = [
         to: 'user@appsus.com',
         trashed: false,
         isStarred: false,
-
+        label: 'A',
         },
         {
         id: 'e103',
@@ -36,7 +37,7 @@ var defaultMails = [
         to: 'user@appsus.com',
         trashed: false,
         isStarred: false,
-
+        label: 'A',
         }, 
         {
         id: 'e104',
@@ -49,7 +50,7 @@ var defaultMails = [
         to: 'jimmy@momo.com',
         trashed: false,
         isStarred: false,
-
+        label: '',
         }, 
     ]
 
@@ -57,6 +58,9 @@ var defaultMails = [
         email: 'user@appsus.com',
         fullname: 'Ilan'
        }
+
+    
+
 
 
 import { storageService } from '../../../services/async-storage.service.js'
@@ -73,6 +77,8 @@ export const mailService = {
     getEmptyMail,
     getUserDetails,
     getNewMail,
+    getLabels,
+    addLabel,
 }
 
 function getUserDetails(){
@@ -157,4 +163,20 @@ function _createMail() {
     const mail = getEmptyMail()
     mail.id = utilService.makeId() 
     return mail
+}
+
+function getLabels(){
+   return storageService.query('labels')
+}
+
+function addLabel(labelName){
+    var label = {
+        name: labelName,
+        color: 'orange',
+    }
+    var labels = utilService.loadFromStorage('labels') || []
+    labels.unshift(label)
+    utilService.saveToStorage('labels', labels)
+    console.log(labels);
+    return labels
 }
