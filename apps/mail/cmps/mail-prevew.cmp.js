@@ -7,8 +7,8 @@ export default {
             <span @click.stop.prevent="starMail" :style="starStyle"><i class="fa-solid fa-star"></i></span>
             <span @click.stop.prevent="toggleRead"><i :class="envelopeType"></i></i></span>
             <h2>{{ mail.name }}</h2>
-            <!-- <h3>{{ mail.subject }}</h3> -->
-            <p>{{ mail.body }}</p>
+            <p>{{ mail.subject }}</p>
+            <!-- <h3>{{ mail.body }}</h3> -->
             <p>{{ formatDate }}</p>
         </article>
     `,
@@ -24,7 +24,7 @@ export default {
         },
       
         formatDate(){
-            return new Date(this.mail.sentAt).toLocaleDateString()
+            return new Date(this.mail.sentAt).toDateString()
         },
 
         starStyle(){

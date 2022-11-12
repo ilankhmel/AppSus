@@ -51,3 +51,16 @@ button {
   outline: 1px solid gold
 }
 
+header{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header a{
+  margin-right: 20px;
+}

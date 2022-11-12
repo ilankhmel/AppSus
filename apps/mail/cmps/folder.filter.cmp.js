@@ -1,7 +1,8 @@
 import mailCompose from './mail-compose.cmp.js'
+import { eventBus } from '../../../services/event-bus.service.js'
 export default {
     template: `
-    <section class="folder-filter">
+    <section class="folder-filter" :class="hamburgerClass">
         <mail-compose></mail-compose>
         <button @click="setFolder('inbox')"><i class="fa-solid fa-inbox"></i> Inbox</button>
         <button @click="setFolder('trash')"><i class="fa-solid fa-trash"></i> Trash</button>
@@ -13,16 +14,33 @@ export default {
     data(){
         return{
             folder: null,
+            isShown: false,
         }
     },
 
+    created(){
+        eventBus.on('toggleStyle', this.toggleStyle)
+    },
+
     methods:{
+        toggleStyle(){
+            this.isShown = !this.isShown
+            console.log(this.isShown);
+        },
+
         setFolder(str){
             this.folder = str
             console.log(this.folder);
             this.$emit('setfolder', this.folder)
             this.$router.push('/mail')
+        },
+
+    },
+    computed: {
+        hamburgerClass(){
+            return (this.isShown) ? 'shown' : ''
         }
+
     },
 
     components: {
